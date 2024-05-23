@@ -5,16 +5,16 @@ use App\Http\Controllers\OfferController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/csrf-token', function () {
-    return response()->json(['token' => csrf_token()]);
+Route::get('/api/csrf-token', function () {
+    return response()->json(csrf_token());
 });
 
-Route::get('/user/cupons', [CuponsController::class, 'getCupons']);
-Route::post('/user/cupon/create', [CuponsController::class, 'createCupon']);
-Route::put('/user/cupon/{id}', [CuponsController::class, 'redeemCoupon']); 
+Route::get('/api/user/cupons', [CuponsController::class, 'getCupons']);
+Route::post('/api/user/cupon/create', [CuponsController::class, 'createCupon'])->withoutMiddleware(['Illuminate\Foundation\Http\Middleware\VerifyCsrfToken']);
+Route::put('/api/user/cupon/{id}', [CuponsController::class, 'redeemCoupon'])->withoutMiddleware(['Illuminate\Foundation\Http\Middleware\VerifyCsrfToken']);
 
-Route::get('/user/{id}', [UserController::class, 'getUserUnique']); 
-Route::post('/user/register', [UserController::class, 'register']); 
-Route::post('/user/login', [UserController::class, 'login']);
+Route::get('/api/user/{id}', [UserController::class, 'getUserUnique']); 
+Route::post('/api/user/register', [UserController::class, 'register'])->withoutMiddleware(['Illuminate\Foundation\Http\Middleware\VerifyCsrfToken']);
+Route::post('/api/user/login', [UserController::class, 'login'])->withoutMiddleware(['Illuminate\Foundation\Http\Middleware\VerifyCsrfToken']);
 
-Route::get('/offers', OfferController::class);
+Route::get('/api/offers', OfferController::class);

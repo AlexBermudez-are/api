@@ -21,8 +21,8 @@ class OfferFactory extends Factory
 
         return [
             'product' => fake()->unique()->randomElement($uniqueProducts),
-            'description' => fake()->sentence(3),
-            'discount' => fake()->optional()->numberBetween(1, 5) * 10, 
+            'description' => implode(' ', fake()->words(3)),
+            'discount' => fake()->numberBetween(1, 5) * 10, 
             'original_price' => fake()->randomNumber(2) * 50,
             'created_at' => fake()->dateTimeBetween('-1 year', 'now'),
             'updated_at' => fake()->dateTimeBetween('-1 year', 'now'),
